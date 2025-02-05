@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Welcome to the Rainverse 💙</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Arial', sans-serif;
+      background: linear-gradient(to bottom, #87CEEB, #ADD8E6);
+      background-size: cover;
+      background-repeat: no-repeat;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      color: white;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .container {
+      background: rgba(0, 0, 0, 0.5);
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+      position: relative;
+      z-index: 2;
+    }
+
+    h1 {
+      font-size: 3rem;
+      margin-bottom: 20px;
+    }
+
+    p {
+      font-size: 1.2rem;
+      line-height: 1.6;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    button {
+      padding: 10px 20px;
+      font-size: 1.2rem;
+      border: none;
+      border-radius: 5px;
+      background: #FF69B4;
+      color: white;
+      cursor: pointer;
+      margin-top: 20px;
+    }
+
+    button:hover {
+      background: #FF1493;
+    }
+
+    .step {
+      display: none;
+      opacity: 0;
+      transition: opacity 1s ease-in-out;
+    }
+
+    .step.active {
+      display: block;
+      opacity: 1;
+    }
+
+    .rain {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 1;
+      overflow: hidden;
+    }
+
+    .rain span {
+      position: absolute;
+      width: 2px;
+      height: 50px;
+      background: rgba(255, 255, 255, 0.7);
+      animation: fall linear infinite;
+    }
+
+    @keyframes fall {
+      0% { transform: translateY(-100vh); opacity: 0; }
+      50% { opacity: 1; }
+      100% { transform: translateY(100vh); opacity: 0; }
+    }
+
+    .pictures {
+      display: flex;
+      justify-content: space-around;
+      margin-top: 20px;
+    }
+
+    .pictures img {
+      width: 30%;
+      border-radius: 10px;
+      border: 2px solid white;
+    }
+
+    .cat img {
+      width: 150px;
+      margin-bottom: 20px;
+    }
+
+    .envelope {
+      width: 200px;
+      height: 120px;
+      background: #FF69B4;
+      position: relative;
+      margin: 0 auto;
+      cursor: pointer;
+      animation: float 3s ease-in-out infinite;
+    }
+
+    .envelope::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 0;
+      height: 0;
+      border-left: 100px solid transparent;
+      border-right: 100px solid transparent;
+      border-bottom: 60px solid #FF69B4;
+    }
+
+    .envelope::after {
+      content: '';
+      position: absolute;
+      top: 60px;
+      left: 0;
+      width: 200px;
+      height: 60px;
+      background: #FF69B4;
+    }
+
+    @keyframes float {
+      0% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+      100% { transform: translateY(0); }
+    }
+
+    .hearts {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .hearts span {
+      position: absolute;
+      color: rgba(173, 216, 230, 0.3);
+      font-size: 20px;
+      animation: float-hearts 10s infinite;
+    }
+
+    @keyframes float-hearts {
+      0% { transform: translateY(0); opacity: 0; }
+      50% { opacity: 1; }
+      100% { transform: translateY(-100vh); opacity: 0; }
+    }
+
+    .animated-text {
+      font-size: 4rem;
+      font-weight: bold;
+      animation: bounce 2s infinite;
+    }
+
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-20px); }
+    }
+  </style>
+</head>
+<body>
+  <!-- Background Music -->
+  <audio id="background-music" loop>
+    <source src="song.mp3" type="audio/mpeg">
+    Your browser does not support the audio element.
+  </audio>
+
+  <!-- Add a button to start music -->
+  <button onclick="startMusic()" style="position: absolute; top: 10px; left: 10px; z-index: 1000;">
+    Play Music 🎵
+  </button>
+
+  <!-- Rain Animation -->
+  <div class="rain">
+    <!-- Raindrops will be generated here -->
+  </div>
+
+  <!-- Tiny Blue Hearts -->
+  <div class="hearts">
+    <!-- Hearts will be generated here -->
+  </div>
+
+  <div class="container">
+    <!-- Step 0: Big Animated Message -->
+    <div class="step active" id="step0">
+      <h1 class="animated-text">HAPPY VALENTINE'S DAY!!!!!!!</h1>
+      <p>Click on the "Play Music" button if you haven't already 🎵</p>
+      <button onclick="nextStep(1)">Next</button>
+    </div>
+
+    <!-- Step 1: Cute Cat with Bouquet -->
+    <div class="step" id="step1">
+      <div class="cat">
+        <img src="cat.png" alt="Cute Cat with Bouquet">
+      </div>
+      <p>Before entering, here's a bouquet for madam jiiiiiiiii 💐</p>
+      <button onclick="nextStep(2)">Next</button>
+    </div>
+
+    <!-- Step 2: Envelope Animation -->
+    <div class="step" id="step2">
+      <h1>Here's a Letter for You 💌</h1>
+      <div class="envelope" onclick="nextStep(3)"></div>
+      <p>Click the envelope to open it!</p>
+    </div>
+
+    <!-- Step 3: Letter -->
+    <div class="step" id="step3">
+      <h1>To the Love of My Life 💌</h1>
+      <p>
+        Hiiiiii, It's our first Valentine's Day together, and I just tried to put something together because our common enemy is stopping us from meeting (distance, we hate youuuu!!!).<br><br>
+        I am extremely happy to be with you, and we are never going to grow apart or just end things, because let's be honest honeyy, there's no other match for us two weird humans....<br><br>
+        I am crazy in love with you, with every single thing you do. The way you get mad at me when I am being goofy, the way you handle my dramebaazi, the way you go all shyyy with me, the way you laugh, the way you be all cute and vulnerable with me, and that's just the start of it. I know that it's been only a couple of months, but I know that I want this, I am 100% into this relationship, and there's nothing I wouldn't do to keep you happy...<br><br>
+        I love you soooooo, veryyyyy muchhhh, never forget that.<br><br>
+        P.S. If you didn't get it, Rain is Roshini + Zain. Very dumb, but I like it..
+      </p>
+      <button onclick="nextStep(4)">Next</button>
+    </div>
+
+    <!-- Step 4: Pictures -->
+    <div class="step" id="step4">
+      <h1>Our Memories 💕</h1>
+      <p>Here are some of my favourite pictures everrrrrrrr (ofccc, it's all 'cause you're in them with me)</p>
+      <div class="pictures">
+        <img src="image1.jpg" alt="Our Picture 1">
+        <img src="image2.jpg" alt="Our Picture 2">
+        <img src="image3.jpg" alt="Our Picture 3">
+      </div>
+      <button onclick="nextStep(5)">Next</button>
+    </div>
+
+    <!-- Step 5: Final Message -->
+    <div class="step" id="step5">
+      <h1>Until We Meet Again 💙</h1>
+      <p>Until the next time we meet, never forgettttt I LOVE YOUUUUUU <3333333</p>
+    </div>
+  </div>
+
+  <script>
+    function nextStep(stepNumber) {
+      // Hide all steps with fading animation
+      document.querySelectorAll('.step').forEach(step => {
+        step.classList.remove('active');
+      });
+
+      // Show the current step with fading animation
+      setTimeout(() => {
+        document.getElementById(`step${stepNumber}`).classList.add('active');
+      }, 500); // Delay to allow fade-out before fade-in
+    }
+
+    // Rain animation
+    const rain = document.querySelector('.rain');
+    for (let i = 0; i < 100; i++) {
+      const drop = document.createElement('span');
+      drop.style.left = Math.random() * 100 + 'vw';
+      drop.style.animationDuration = Math.random() * 1 + 0.5 + 's'; // Random speed
+      drop.style.animationDelay = Math.random() * 2 + 's'; // Random delay
+      rain.appendChild(drop);
+    }
+
+    // Tiny Blue Hearts animation
+    const hearts = document.querySelector('.hearts');
+    for (let i = 0; i < 50; i++) {
+      const heart = document.createElement('span');
+      heart.innerHTML = '💙';
+      heart.style.left = Math.random() * 100 + 'vw';
+      heart.style.animationDuration = Math.random() * 5 + 5 + 's'; // Random speed
+      heart.style.animationDelay = Math.random() * 5 + 's'; // Random delay
+      hearts.appendChild(heart);
+    }
+
+    // Start music function
+    function startMusic() {
+      const music = document.getElementById('background-music');
+      music.play();
+    }
+  </script>
+</body>
+</html>
